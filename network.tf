@@ -1,4 +1,4 @@
-variable "vpc_cidr_block"
+variable "vpc_cidr_block" {}
 
 #Create a VPC with Terraform
 resource "aws_vpc" "custom_vpc" {
