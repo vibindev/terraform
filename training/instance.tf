@@ -1,9 +1,10 @@
 # Creating EC2 Instance
 resource "aws_instance" "web-server" {
- ami = "ami-bf4193c7"
- instance_type = "t2.micro"
- tag = "Web Server"
- user_data = <<USER_DATA
+  ami           = "ami-bf4193c7"
+  instance_type = "t2.micro"
+  tag           = "Web Server"
+
+  user_data = <<USER_DATA
  #!/bin/bash
  yum update -y
  yum install -y httpd24 php56 mysql55-server php56-mysqlnd

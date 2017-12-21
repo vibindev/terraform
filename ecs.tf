@@ -1,11 +1,12 @@
 variable mysql_db_pass {}
+variable ecs_optimized_ami {}
 
 # Creating environment variable for Docker Containers
 data "template_file" "ecs_task_template" {
   template = "${file("ecs-task-definition.json.tpl")}"
 
   vars {
-    mysql_password     = "${var.mysql_db_pass}"
+    mysql_password = "${var.mysql_db_pass}"
   }
 }
 
@@ -100,13 +101,13 @@ resource "aws_ecs_service" "wp-ecs" {
 
 # Creating ECS Optimized EC2 instance to run containers 
 resource "aws_instance" "ecs" {
-  ami                    = "ami-05991b6a"
+  ami                    = "${var.ecs_optimized_ami}"
   instance_type          = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.web.id}"]
   iam_instance_profile   = "${aws_iam_instance_profile.ecs.name}"
 
   tags {
-    Name        = "WP-ECS Instance"
+    Name = "WP-ECS Instance"
   }
 
   user_data = <<USER_DATA
